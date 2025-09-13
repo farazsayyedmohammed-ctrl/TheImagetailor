@@ -177,40 +177,47 @@
         #booking-section {
             margin-top: 50px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            /* New: More attractive background and 3D effect */
+            background: linear-gradient(135deg, #1f1f1f 0%, #3a3a3a 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-right-color: rgba(255, 255, 255, 0.1);
-            border-bottom-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #booking-section:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.15);
         }
         #booking-section h2 {
             text-align: center;
             margin-bottom: 20px;
             color: #ffcc00;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
         }
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
             color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
         }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: #fff;
             font-family: 'Poppins', sans-serif;
             transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.3);
         }
         .form-group input::placeholder, .form-group textarea::placeholder {
             color: #ddd;
@@ -230,8 +237,8 @@
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: #ffcc00;
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
-            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8), inset 0 1px 8px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.2);
         }
         .button-group {
             display: flex;
@@ -853,7 +860,6 @@
             </div>
         </section>
     </main>
-
     <div id="aiChatWidget">
         <button id="aiChatButton" title="Chat with ImageTailorAI">
             <i class="fas fa-robot"></i>
@@ -873,7 +879,6 @@
             </div>
         </div>
     </div>
-
     <footer>
         <div class="footer-grid">
             <div>
@@ -908,57 +913,111 @@
             <a href="#" target="_blank" aria-label="Follow us on Pinterest"><i class="fa-brands fa-pinterest"></i></a>
             <a href="https://www.youtube.com/@TheImageTailor" target="_blank" aria-label="Follow us on YouTube"><i class="fa-brands fa-youtube"></i></a>
         </div>
-        <div class="copyright">
-            <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ffffff;">farazsayyedmohammed@gmail.com</a></p>
+        <div class="copyright-info">
+            <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ccc;">farazsayyedmohammed@gmail.com</a></p>
             <p>Phone / WhatsApp: +91 7985409760</p>
             <p>© <script>document.write(new Date().getFullYear())</script> The Image Tailor. All rights reserved.</p>
         </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Splash screen functionality
+            const splashScreen = document.getElementById('splash-screen');
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+            }, 3500);
+
+            // Mobile navigation toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const mainNav = document.getElementById('main-nav');
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+            });
+            mainNav.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    mainNav.classList.remove('open');
+                }
+            });
+
+            // Accordion for FAQs
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Form Submission (Simulated) & Truck Animation
+            const orderButton = document.querySelector('.order-button');
+            const bookingForm = document.getElementById('booking-form');
+            const emailIssueButton = document.getElementById('email-issue-button');
+
+            orderButton.addEventListener('click', (e) => {
+                if (bookingForm.checkValidity()) {
+                    e.preventDefault();
+                    orderButton.classList.add('sent');
+                    setTimeout(() => {
+                        alert('Booking request submitted!');
+                        orderButton.classList.remove('sent');
+                    }, 2500);
+                } else {
+                    bookingForm.reportValidity();
+                }
+            });
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
+            
+            // AI Chat Widget
             const aiChatButton = document.getElementById('aiChatButton');
             const aiChatContainer = document.getElementById('aiChatContainer');
             const closeChatButton = document.getElementById('closeChat');
             const chatInput = document.getElementById('chatInput');
             const sendButton = document.getElementById('sendButton');
             const chatBody = document.getElementById('chatBody');
-            const navToggle = document.getElementById('nav-toggle');
-            const mainNav = document.getElementById('main-nav');
-            const orderButton = document.querySelector('.order-button');
-            const faqItems = document.querySelectorAll('.faq-item');
-            const splashScreen = document.getElementById('splash-screen');
-            const hiddenElements = document.querySelectorAll('.hidden');
 
-            // Splash Screen Logic
-            setTimeout(() => {
-                splashScreen.classList.add('fade-out');
-            }, 5000);
-
-            // AI Chat Widget Logic
             aiChatButton.addEventListener('click', () => {
                 aiChatContainer.classList.toggle('open');
                 if (aiChatContainer.classList.contains('open')) {
                     chatInput.focus();
                 }
             });
+
             closeChatButton.addEventListener('click', () => {
                 aiChatContainer.classList.remove('open');
             });
+
             sendButton.addEventListener('click', sendMessage);
             chatInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             });
+
             function sendMessage() {
                 const userMessageText = chatInput.value.trim();
                 if (userMessageText === '') return;
+
                 const userMessageDiv = document.createElement('div');
                 userMessageDiv.className = 'message user-message';
                 userMessageDiv.textContent = userMessageText;
                 chatBody.appendChild(userMessageDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
                 chatInput.value = '';
+
                 setTimeout(() => {
                     const aiResponse = generateAiResponse(userMessageText);
                     const aiMessageDiv = document.createElement('div');
@@ -968,6 +1027,7 @@
                     chatBody.scrollTop = chatBody.scrollHeight;
                 }, 500);
             }
+
             function generateAiResponse(message) {
                 const lowerCaseMessage = message.toLowerCase();
                 if (lowerCaseMessage.includes('services')) {
@@ -987,42 +1047,6 @@
                 }
                 return `I'm sorry, I didn't quite understand that. I can answer questions about our **services**, **pricing**, or **contact** details.`;
             }
-
-            // Mobile Nav Toggle
-            navToggle.addEventListener('click', () => {
-                mainNav.classList.toggle('open');
-            });
-
-            // Order Button Animation
-            orderButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                orderButton.classList.add('sent');
-                setTimeout(() => {
-                    orderButton.classList.remove('sent');
-                }, 4000);
-            });
-
-            // FAQ Accordion
-            faqItems.forEach(item => {
-                const header = item.querySelector('h3');
-                header.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                });
-            });
-
-            // Intersection Observer for scroll animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('show');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            hiddenElements.forEach((el) => observer.observe(el));
         });
     </script>
 </body>
