@@ -21,6 +21,7 @@
             display: flex;
             flex-direction: column;
             perspective: 1000px;
+            overflow-x: hidden;
         }
         header, footer {
             max-width: 1200px;
@@ -41,14 +42,23 @@
             font-family: 'Montserrat', sans-serif;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
         }
+        nav {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
         nav a {
-            margin-left: 20px;
             text-decoration: none;
             color: #ccc;
             font-weight: bold;
             transition: color 0.3s ease;
         }
         nav a:hover { color: #fff; text-shadow: 0px 0px 5px #fff; }
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
         main {
             max-width: 1200px;
             margin: 40px auto;
@@ -327,11 +337,95 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        /*
+            ======================================
+            New Footer Styles
+            ======================================
+        */
+        footer {
+            background: #2d2d2d;
+            padding: 40px 20px;
+            margin-top: 50px;
+            color: #ccc;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .footer-grid h4 {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        .footer-grid ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+        .footer-grid ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-grid ul li a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .social-icons-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-icons-footer a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons-footer a:hover {
+            color: #ffcc00;
+            transform: scale(1.2);
+        }
+        .footer-line {
+            border: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .copyright-info {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        /* NEW: Scroll animation styles */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
         /* Responsive tweaks */
         @media (max-width:900px) {
             main { padding: 24px; }
             header, footer { padding: 12px; }
             nav { display: none; }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid > div {
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -345,14 +439,14 @@
             </div>
         </div>
         <nav>
-            <a href="the image tailor.html">Home</a>
+            <a href="theimagetailor.html">Home</a>
             <a href="theimagetailor.html">Work in Action</a>
             <a href="theimagetailor2.html">Pricing Menu</a>
             <a href="theimagetailor3.html">Premium</a>
         </nav>
     </header>
     <main>
-        <section>
+        <section class="hidden">
             <h2>Our Premium Plans</h2>
             <p style="text-align: center; color: #ccc; margin-bottom: 20px;">For those who want more. Get a discount when you buy in bulk with our premium packages.</p>
             <div class="premium-container">
@@ -360,7 +454,7 @@
                     <h3>Basic</h3>
                     <p>Get professional photo editing for a single image, with fast turnaround.</p>
                     <div class="price">₹100</div>
-                    <button onclick="window.location.href='the image tailor.html'">Order Now</button>
+                    <button onclick="window.location.href='theimagetailor.html'">Order Now</button>
                 </div>
                 <div class="premium-card" id="pro-card">
                     <span class="best-value-banner">Most Popular</span>
@@ -370,7 +464,7 @@
                         <span id="proPrice">₹180</span><br>
                         <small>for 2 images</small>
                     </div>
-                    <button onclick="window.location.href='the image tailor.html'">Order Now</button>
+                    <button onclick="window.location.href='theimagetailor.html'">Order Now</button>
                     <p class="discount">10% OFF!</p>
                 </div>
                 <div class="premium-card" id="ultimate-card">
@@ -381,12 +475,12 @@
                         <span id="ultimatePrice">₹240</span><br>
                         <small>for 3 images</small>
                     </div>
-                    <button onclick="window.location.href='the image tailor.html'">Order Now</button>
+                    <button onclick="window.location.href='theimagetailor.html'">Order Now</button>
                     <p class="discount">20% OFF!</p>
                     <div class="confetti-container"></div>
                 </div>
             </div>
-            <section class="calculator" style="text-align: center; margin-top: 50px;">
+            <section class="calculator hidden" style="text-align: center; margin-top: 50px;">
                 <h2>See Your Savings</h2>
                 <p style="margin-bottom: 20px;">Calculate the discounted price for your project.</p>
                 <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
@@ -422,23 +516,44 @@
         </div>
     </div>
     <footer id="contact">
-        <div style="max-width:1200px;margin:auto;padding:20px;display:grid;gap:20px;grid-template-columns:1fr 1fr">
+        <div class="footer-grid">
             <div>
-                <h4>Contact</h4>
-               <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ffffff;">farazsayyedmohammed@gmail.com</a></p>
-                <p>Phone / WhatsApp: +91 7985409760</p>
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="theimagetailor2.html">Pricing Menu</a></li>
+                    <li><a href="theimagetailor3.html">Premium Offers</a></li>
+                    <li><a href="#">Work in Action</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                </ul>
             </div>
             <div>
                 <h4>Business Info</h4>
                 <p>The Image Tailor — Photo & Reel Editing</p>
-                <p style="font-size:12px;color:#888">Turnaround 24–48 hours for basic edits. Refunds/rework if expectations not met.</p>
+                <p style="font-size:12px;color:#888; margin-top: 10px;">Turnaround 24–48 hours for basic edits. Refunds/rework if expectations not met.</p>
             </div>
         </div>
-        <p style="text-align:center;font-size:12px;color:#555">© <script>document.write(new Date().getFullYear())</script> The Image Tailor. All rights reserved.</p>
-        <p style="text-align:center;margin-top:8px" class="social-icons">
+        <hr class="footer-line">
+        <div class="social-icons-footer">
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Follow us on Facebook"><i class="fa-brands fa-facebook"></i></a>
             <a href="https://www.instagram.com/theimagetailor?igsh=MTV3bWhweDJwNWo0dA==" target="_blank" aria-label="Follow us on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/917985409760" target="_blank" aria-label="Contact us on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" target="_blank" aria-label="Follow us on Pinterest"><i class="fa-brands fa-pinterest"></i></a>
             <a href="https://www.youtube.com/@TheImageTailor" target="_blank" aria-label="Follow us on YouTube"><i class="fa-brands fa-youtube"></i></a>
-        </p>
+        </div>
+        <div class="copyright-info">
+            <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ffffff;">farazsayyedmohammed@gmail.com</a></p>
+            <p>Phone / WhatsApp: +91 7985409760</p>
+            <p>© <script>document.write(new Date().getFullYear())</script> The Image Tailor. All rights reserved.</p>
+        </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -455,24 +570,29 @@
                     chatInput.focus();
                 }
             });
+
             closeChatButton.addEventListener('click', () => {
                 aiChatContainer.classList.remove('open');
             });
+
             sendButton.addEventListener('click', sendMessage);
             chatInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             });
+
             function sendMessage() {
                 const userMessageText = chatInput.value.trim();
                 if (userMessageText === '') return;
+
                 const userMessageDiv = document.createElement('div');
                 userMessageDiv.className = 'message user-message';
                 userMessageDiv.textContent = userMessageText;
                 chatBody.appendChild(userMessageDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
                 chatInput.value = '';
+
                 setTimeout(() => {
                     const aiResponse = generateAiResponse(userMessageText);
                     const aiMessageDiv = document.createElement('div');
@@ -482,6 +602,7 @@
                     chatBody.scrollTop = chatBody.scrollHeight;
                 }, 500);
             }
+
             function generateAiResponse(message) {
                 const lowerCaseMessage = message.toLowerCase();
                 if (lowerCaseMessage.includes('services')) {
@@ -501,6 +622,7 @@
                 }
                 return `I'm sorry, I didn't quite understand that. I can answer questions about our **services**, **pricing**, or **contact** details.`;
             }
+
             // 3D Tilt Effect
             const cards = document.querySelectorAll('.premium-card');
             cards.forEach(card => {
@@ -516,6 +638,7 @@
                     card.style.transform = `rotateX(0deg) rotateY(0deg)`;
                 });
             });
+
             // Confetti Animation on Ultimate Card Hover
             const ultimateCard = document.getElementById('ultimate-card');
             const confettiContainer = ultimateCard.querySelector('.confetti-container');
@@ -541,6 +664,7 @@
                 clearInterval(confettiInterval);
                 confettiInterval = null;
             });
+
             // Interactive Pricing Calculator
             function calculatePrice() {
                 const count = parseInt(document.getElementById('imageCount').value);
@@ -548,10 +672,12 @@
                 let finalPrice = 0;
                 let savings = 0;
                 let cardToHighlight = null;
+
                 // Reset card highlights
                 document.getElementById('basic-card').classList.remove('highlight');
                 document.getElementById('pro-card').classList.remove('highlight');
                 document.getElementById('ultimate-card').classList.remove('highlight');
+
                 if (count >= 3) {
                     finalPrice = count * basePrice * 0.8; // 20% off
                     savings = (count * basePrice) - finalPrice;
@@ -565,8 +691,10 @@
                     savings = 0;
                     cardToHighlight = 'basic-card';
                 }
+
                 document.getElementById('totalPrice').textContent = `₹${Math.round(finalPrice)}`;
                 document.getElementById('totalSavings').textContent = `₹${Math.round(savings)}`;
+
                 if (cardToHighlight) {
                     document.getElementById(cardToHighlight).classList.add('highlight');
                 }
@@ -574,6 +702,21 @@
             // Initial calculation on page load
             calculatePrice();
             window.calculatePrice = calculatePrice; // Expose to global scope for the oninput attribute
+
+            // NEW: Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
         });
     </script>
 </body>

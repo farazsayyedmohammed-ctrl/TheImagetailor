@@ -85,16 +85,6 @@
             vertical-align: super;
             color: #ccc;
         }
-        .social-icons a {
-            color: #fff;
-            font-size: 1.5rem;
-            margin: 0 10px;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: #ffcc00;
-            transform: scale(1.2);
-        }
         /* Home Page Content */
         .hero {
             text-align: center;
@@ -108,7 +98,7 @@
             white-space: nowrap;
             border-right: .15em solid orange;
             animation: typing 3s steps(25, end) forwards,
-                       blink-caret .75s step-end infinite 2s;
+                         blink-caret .75s step-end infinite 2s;
             width: 0;
             animation-fill-mode: forwards;
             animation-delay: 2s;
@@ -568,9 +558,9 @@
             margin-bottom: 10px;
             opacity: 0;
             animation: fadeInUp 1.5s ease-out forwards,
-                       glow 3s infinite alternate ease-in-out 1.5s,
-                       lightBeam 3s infinite alternate ease-in-out 1.5s;
-            animation-delay: 0.5s, 1.5s, 1.5s;
+                         glow 2s infinite alternate ease-in-out 1.5s,
+                         lightBeam 2s infinite alternate ease-in-out 1.5s;
+            animation-delay: 0.5s, 1.5s,;
             animation-fill-mode: forwards;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
@@ -581,6 +571,16 @@
             opacity: 0;
             animation: fadeInUp 1.5s ease-out forwards;
             animation-delay: 1s;
+        }
+        /* New Scroll Animation Styles */
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
         }
         /* Keyframe Animations */
         @keyframes fadeInUp {
@@ -601,54 +601,80 @@
         @keyframes lightBeam {
             0% {
                 text-shadow: 0 -20px 30px rgba(255, 255, 0, 0.8),
-                             0 0 10px #ffcc00;
+                              0 0 10px #ffcc00;
             }
             50% {
                 text-shadow: 0 -5px 15px rgba(255, 255, 0, 0.6),
-                             0 0 20px #ffcc00,
-                             0 0 40px #ffcc00;
+                              0 0 20px #ffcc00,
+                              0 0 40px #ffcc00;
             }
             100% {
                 text-shadow: 0 -20px 30px rgba(255, 255, 0, 0.8),
-                             0 0 10px #ffcc00;
+                              0 0 10px #ffcc00;
             }
         }
-        /* Footer Navigation Styles */
-        .footer-nav {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 20px;
-        }
-        .footer-nav li {
-            margin: 0 15px;
-        }
-        .footer-nav a {
-            text-decoration: none;
+        /* NEW: Footer Styles */
+        footer {
+            background: #2d2d2d;
+            padding: 40px 20px;
+            margin-top: 50px;
             color: #ccc;
-            font-weight: bold;
-            transition: color 1.5s ease;
         }
-        .footer-nav a:hover {
-            color: #fff;
-            text-shadow: 0px 0px 5px #fff;
-        }
-        .footer-content {
+        .footer-grid {
             max-width: 1200px;
             margin: auto;
-            padding: 20px;
             display: grid;
-            gap: 20px;
-            grid-template-columns: 1fr 1fr;
-        }
-        .footer-text {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
             text-align: center;
-            font-size: 12px;
-            color: #555;
+        }
+        .footer-grid h4 {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        .footer-grid ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+        .footer-grid ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-grid ul li a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .social-icons-footer {
+            text-align: center;
             margin-top: 20px;
+        }
+        .social-icons-footer a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-icons-footer a:hover {
+            color: #ffcc00;
+            transform: scale(1.2);
+        }
+        .footer-line {
+            border: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 10px;
         }
         /* Responsive tweaks */
         @media (max-width: 900px) {
@@ -672,16 +698,10 @@
             #splash-screen h1 { font-size: 3rem; }
             #splash-screen p { font-size: 1.1rem; }
             .hero h2 { font-size: 2rem; }
-            .footer-content { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {
-            .footer-nav {
-                flex-direction: column;
-                align-items: center;
-            }
-            .footer-nav li {
-                margin: 10px 0;
-            }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-grid > div { margin-bottom: 20px; }
         }
     </style>
 </head>
@@ -699,7 +719,7 @@
             </div>
         </div>
         <nav id="main-nav">
-            <a href="the image tailor.html">Home</a>
+            <a href="theimagetailor.html">Home</a>
             <a href="theimagetailor.html">Work in Action</a>
             <a href="theimagetailor2.html">Pricing Menu</a>
             <a href="theimagetailor3.html">Premium</a>
@@ -715,8 +735,7 @@
             <p>Transform your photos and reels into stunning masterpieces. We make your moments shine.</p>
             <a href="#booking-section">Start Your Project</a>
         </section>
-
-        <section class="features-grid">
+        <section class="features-grid hidden">
             <div class="feature-item">
                 <i class="fas fa-magic"></i>
                 <h3>Creative Edits</h3>
@@ -733,8 +752,7 @@
                 <p>Receive your finished work in 24-48 hours.</p>
             </div>
         </section>
-
-        <section id="booking-section">
+        <section id="booking-section" class="hidden">
             <h2>Quick Booking</h2>
             <p style="text-align: center; color: #ccc; margin-bottom: 20px;">Fill out the form below to place your order. You can attach your image(s) and specify your needs.</p>
             <form id="booking-form">
@@ -795,21 +813,19 @@
                         <div class="truck-container">
                             <div class="truck"></div>
                         </div>
-                        <div class="order-text">Submit order </div>
+                        <div class="order-text">Submit order</div>
                         <div class="success-text">Booking Successful!</div>
                     </div>
                     <a href="mailto:farazsayyedmohammed@gmail.com" id="email-issue-button">Call To Action </a>
                 </div>
             </form>
         </section>
-
-        <section class="about-us">
+        <section class="about-us hidden">
             <h2>About Us</h2>
             <p>The Image Tailor was founded by <b>Sayyed Mohammed Faraz</b> and designed by <b>Yuvraj Gautam</b>, with a focus on delivering professional and creative photo and reel editing services with an enhanced user interface. Our mission is to transform your visual content into stunning masterpieces that tell your unique story.</p>
             <p>We are a dedicated team of passionate editors, committed to providing reliable, fast, and affordable services. We believe in building a seamless creative partnership with our clients, ensuring your vision is brought to life perfectly.</p>
         </section>
-
-        <section id="faqs-section">
+        <section id="faqs-section" class="hidden">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
                 <h3>What is your turnaround time?</h3>
@@ -837,6 +853,7 @@
             </div>
         </section>
     </main>
+
     <div id="aiChatWidget">
         <button id="aiChatButton" title="Chat with ImageTailorAI">
             <i class="fas fa-robot"></i>
@@ -856,24 +873,46 @@
             </div>
         </div>
     </div>
-    <footer id="contact">
-        <div class="footer-content">
+
+    <footer>
+        <div class="footer-grid">
             <div>
-                <h4>Contact</h4>
-                <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ffffff;">farazsayyedmohammed@gmail.com</a></p>
-                <p>Phone / WhatsApp: +91 7985409760</p>
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="theimagetailor2.html">Pricing Menu</a></li>
+                    <li><a href="theimagetailor3.html">Premium Offers</a></li>
+                    <li><a href="#">Work in Action</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                </ul>
             </div>
             <div>
                 <h4>Business Info</h4>
                 <p>The Image Tailor — Photo & Reel Editing</p>
-                <p style="font-size:12px;color:#888">Turnaround 24–48 hours for basic edits. Refunds/rework if expectations not met.</p>
+                <p style="font-size:12px;color:#888; margin-top: 10px;">Turnaround 24–48 hours for basic edits. Refunds/rework if expectations not met.</p>
             </div>
         </div>
-        <p class="footer-text">© <script>document.write(new Date().getFullYear())</script> The Image Tailor. All rights reserved.</p>
-        <p style="text-align:center;margin-top:8px" class="social-icons">
+        <hr class="footer-line">
+        <div class="social-icons-footer">
+            <a href="https://www.facebook.com/" target="_blank" aria-label="Follow us on Facebook"><i class="fa-brands fa-facebook"></i></a>
             <a href="https://www.instagram.com/theimagetailor?igsh=MTV3bWhweDJwNWo0dA==" target="_blank" aria-label="Follow us on Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/917985409760" target="_blank" aria-label="Contact us on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" target="_blank" aria-label="Follow us on Pinterest"><i class="fa-brands fa-pinterest"></i></a>
             <a href="https://www.youtube.com/@TheImageTailor" target="_blank" aria-label="Follow us on YouTube"><i class="fa-brands fa-youtube"></i></a>
-        </p>
+        </div>
+        <div class="copyright">
+            <p>Email: <a href="mailto:farazsayyedmohammed@gmail.com" style="color: #ffffff;">farazsayyedmohammed@gmail.com</a></p>
+            <p>Phone / WhatsApp: +91 7985409760</p>
+            <p>© <script>document.write(new Date().getFullYear())</script> The Image Tailor. All rights reserved.</p>
+        </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -883,101 +922,43 @@
             const chatInput = document.getElementById('chatInput');
             const sendButton = document.getElementById('sendButton');
             const chatBody = document.getElementById('chatBody');
-            const orderButton = document.querySelector('.order-button');
-            const faqItems = document.querySelectorAll('.faq-item h3');
-            const splashScreen = document.getElementById('splash-screen');
-            const emailIssueButton = document.getElementById('email-issue-button');
             const navToggle = document.getElementById('nav-toggle');
             const mainNav = document.getElementById('main-nav');
+            const orderButton = document.querySelector('.order-button');
+            const faqItems = document.querySelectorAll('.faq-item');
+            const splashScreen = document.getElementById('splash-screen');
+            const hiddenElements = document.querySelectorAll('.hidden');
 
-            // Splash screen logic
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    splashScreen.classList.add('fade-out');
-                }, 1500); // Reduced delay for faster user experience
-            });
+            // Splash Screen Logic
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+            }, 5000);
 
-            // Mobile navigation toggle
-            navToggle.addEventListener('click', () => {
-                mainNav.classList.toggle('open');
-                navToggle.querySelector('i').classList.toggle('fa-bars');
-                navToggle.querySelector('i').classList.toggle('fa-times');
-            });
-
-            // FAQ accordion logic
-            faqItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const parent = item.parentElement;
-                    const answer = parent.querySelector('.faq-answer');
-                    const isActive = parent.classList.contains('active');
-
-                    document.querySelectorAll('.faq-item.active').forEach(openItem => {
-                        if (openItem !== parent) {
-                            openItem.classList.remove('active');
-                            openItem.querySelector('.faq-answer').style.maxHeight = '0';
-                        }
-                    });
-
-                    if (isActive) {
-                        parent.classList.remove('active');
-                        answer.style.maxHeight = '0';
-                    } else {
-                        parent.classList.add('active');
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                    }
-                });
-            });
-
-            // Animated Order Button logic
-            orderButton.addEventListener('click', function() {
-                const button = this;
-                const form = document.getElementById('booking-form');
-
-                // Check if the form is valid before animating the button
-                if (form.checkValidity()) {
-                    // Animate the truck and text
-                    button.classList.add('sent');
-
-                    // After 2 seconds, reset the button state
-                    setTimeout(() => {
-                        button.classList.remove('sent');
-                    }, 2000);
-                } else {
-                    // If form is not valid, trigger native browser validation UI
-                    form.reportValidity();
-                }
-            });
-
-            // AI chat widget logic
+            // AI Chat Widget Logic
             aiChatButton.addEventListener('click', () => {
                 aiChatContainer.classList.toggle('open');
                 if (aiChatContainer.classList.contains('open')) {
                     chatInput.focus();
                 }
             });
-
             closeChatButton.addEventListener('click', () => {
                 aiChatContainer.classList.remove('open');
             });
-
             sendButton.addEventListener('click', sendMessage);
             chatInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     sendMessage();
                 }
             });
-
             function sendMessage() {
                 const userMessageText = chatInput.value.trim();
                 if (userMessageText === '') return;
-
                 const userMessageDiv = document.createElement('div');
                 userMessageDiv.className = 'message user-message';
                 userMessageDiv.textContent = userMessageText;
                 chatBody.appendChild(userMessageDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
                 chatInput.value = '';
-
                 setTimeout(() => {
                     const aiResponse = generateAiResponse(userMessageText);
                     const aiMessageDiv = document.createElement('div');
@@ -987,7 +968,6 @@
                     chatBody.scrollTop = chatBody.scrollHeight;
                 }, 500);
             }
-
             function generateAiResponse(message) {
                 const lowerCaseMessage = message.toLowerCase();
                 if (lowerCaseMessage.includes('services')) {
@@ -1007,6 +987,42 @@
                 }
                 return `I'm sorry, I didn't quite understand that. I can answer questions about our **services**, **pricing**, or **contact** details.`;
             }
+
+            // Mobile Nav Toggle
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+            });
+
+            // Order Button Animation
+            orderButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                orderButton.classList.add('sent');
+                setTimeout(() => {
+                    orderButton.classList.remove('sent');
+                }, 4000);
+            });
+
+            // FAQ Accordion
+            faqItems.forEach(item => {
+                const header = item.querySelector('h3');
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            hiddenElements.forEach((el) => observer.observe(el));
         });
     </script>
 </body>
