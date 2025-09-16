@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - The Image Tailor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0229;
+            --form-bg: rgba(26, 15, 61, 0.5);
+            --form-border: rgba(69, 53, 114, 0.4);
+            --input-bg: rgba(25, 14, 59, 0.4);
+            --input-border: rgba(144, 117, 199, 0.4);
+            --primary-color: #a879e6;
+            --text-light: #f0f0f0;
+            --text-dark: #333333;
+            --transition-speed: 0.5s;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Header Styles --- */
+        header {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end; /* Aligns content to the right */
+            align-items: center;
+            z-index: 10;
+            position: fixed; /* Ensures header stays at the top */
+            top: 0;
+            left: 0;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            display: none; /* Hidden for a menu-focused layout */
+        }
+        header h1 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+        }
+        .registered {
+            font-size: 0.7rem;
+            vertical-align: super;
+            color: #ccc;
+        }
+        nav {
+            display: flex;
+            flex-direction: column; /* Stacks menu items vertically */
+            gap: 10px;
+            padding: 15px; /* Adds padding around the menu items */
+            background: rgba(11, 2, 41, 0.5); /* Semi-transparent background */
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        nav a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        nav a:hover {
+            color: #fff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Container for the 3D animation and UI */
+        #main-container {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 3D Canvas Styles */
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* UI and Form Styles */
+        .auth-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            width: 90%;
+            padding: 2.5rem;
+            background: var(--form-bg);
+            border-radius: 20px;
+            border: 1px solid var(--form-border);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        
+        .auth-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-section h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            transition: transform 0.5s ease;
+        }
+        
+        .form-section p {
+            color: #b3b3b3;
+            font-size: 0.9rem;
+            transition: opacity 0.5s ease;
+        }
+        
+        .form-box {
+            position: relative;
+            height: 350px;
+        }
+        
+        .form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        
+        .form.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .form:not(.active) {
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            position: relative; /* Added this line */
+            z-index: 3;        /* Added this line */
+        }
+        
+        .form-group input::placeholder {
+            color: #888;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(168, 121, 230, 0.5);
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition-speed) ease, transform 0.2s ease;
+        }
+        
+        .submit-button:hover {
+            background: #9a68de;
+            transform: translateY(-2px);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .switch-form a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color var(--transition-speed) ease;
+        }
+        
+        .switch-form a:hover {
+            color: #fff;
+        }
+        
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .info-section img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .info-section {
+                display: none;
+            }
+        }
+        
+        /* New Styles for Confirmation Message */
+        #confirmation-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background: rgba(40, 255, 120, 0.9);
+            color: #0b0229;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0s 0.5s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        #confirmation-message.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0s;
+        }
+    </style>
+</head>
+<body>
+    <div id="confirmation-message">
+        Sign Up Successful! Redirecting...
+    </div>
+    
+    <header>
+        <nav id="main-nav">
+            <a href="theimagetailor.html">Home</a>
+            <a href="theimagetailor.html">Work in Action</a>
+            <a href="theimagetailor2.html">Pricing Menu</a>
+            <a href="theimagetailor3.html">Premium</a>
+            <a href="theimagetailor.html">Contact Us</a>
+            <a href="theimagetailor4.html">Login/Sign Up</a>
+        </nav>
+    </header>
+
+    <div id="main-container">
+        <div id="three-container"></div>
+        
+        <div class="auth-container">
+            <div class="form-section">
+                <h2 id="form-heading">Sign up account</h2>
+                <p id="form-subheading">Create an account to submit your orders and track their progress.</p>
+                <div class="form-box">
+                    <form id="signup-form" class="form active">
+                        <div class="form-group">
+                            <input type="text" id="signup-name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="signup-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signup-password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="signup-password-confirm" placeholder="Confirm Password" required>
+                        </div>
+                        <button type="submit" class="submit-button">Sign Up</button>
+                        <p class="switch-form">Already have an account? <a href="#" id="show-login">Log in</a></p>
+                    </form>
+                    
+                    <form id="login-form" class="form">
+                        <div class="form-group">
+                            <input type="email" id="login-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="login-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="submit-button">Log In</button>
+                        <p class="switch-form">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <img src="https://imgs.search.brave.com/hVI22bDycuNFvnzqXAZRsS9lqxxq2ukQSxJs4wV0Sk0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzE1LzIzLzg0LzEz/LzM2MF9GXzE1MjM4/NDEzNjFfaDY5OG90/Z2JCa01tNkJ3bjJ2/bTNGaW1SMEtzbGlP/MUUuanBn" alt="3D Abstract Image">
+                <p style="margin-top: 1rem; color: #ccc;">Your vision, our edit. Transform your photos and reels into stunning masterpieces.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+    <script>
+        // --- FORM SWITCHING LOGIC ---
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const showLoginBtn = document.getElementById('show-login');
+        const showSignupBtn = document.getElementById('show-signup');
+        const formHeading = document.getElementById('form-heading');
+        const formSubheading = document.getElementById('form-subheading');
+        const confirmationMessage = document.getElementById('confirmation-message');
+
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.remove('active');
+            loginForm.classList.add('active');
+            formHeading.textContent = 'Log in to your account';
+            formSubheading.textContent = 'Log in to submit and track your orders.';
+        });
+
+        showSignupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.remove('active');
+            signupForm.classList.add('active');
+            formHeading.textContent = 'Sign up account';
+            formSubheading.textContent = 'Create an account to submit your orders and track their progress.';
+        });
+
+        // --- SUBMISSION LOGIC (PLACEHOLDER) ---
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show confirmation message
+            confirmationMessage.classList.add('active');
+            
+            // Redirect to home page after 2 seconds
+            setTimeout(() => {
+                window.location.href = "theimagetailor.html";
+            }, 2000); // 2000 milliseconds = 2 seconds
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Login form submitted! (This is a placeholder, no data is sent)');
+        });
+
+        // --- 3D ANIMATION LOGIC (Three.js) ---
+        const container = document.getElementById('three-container');
+        let scene, camera, renderer, particles, clock, mouseX = 0, mouseY = 0;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 2;
+            
+            renderer = new THREE.WebGLRenderer({ antialiasing: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+            
+            // Create particle geometry
+            const particleCount = 2000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                // Random position within a cube
+                positions.push(
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10,
+                    (Math.random() - 0.5) * 10
+                );
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            
+            // Create particle material
+            const material = new THREE.PointsMaterial({
+                color: 0x9a68de,
+                size: 0.02,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+            
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Add subtle lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0xa879e6, 1, 10);
+            pointLight.position.set(0, 0, 5);
+            scene.add(pointLight);
+
+            clock = new THREE.Clock();
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate particles
+            const elapsedTime = clock.getElapsedTime();
+            particles.rotation.y = elapsedTime * 0.05;
+            particles.rotation.x = elapsedTime * 0.02;
+            
+            // Move camera with mouse for parallax effect
+            camera.position.x += (mouseX * 0.2 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 0.2 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
