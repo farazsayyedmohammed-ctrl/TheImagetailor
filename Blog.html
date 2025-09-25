@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --background-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --primary-color: #bb86fc;
+            --secondary-color: #333333;
+            --link-color: #03dac6;
+            --border-color: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Header */
+        .site-header {
+            width: 100%;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .site-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .site-header p {
+            font-style: italic;
+            color: #b0b0b0;
+        }
+
+        /* Navigation */
+        .main-nav {
+            width: 100%;
+            background-color: var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav a:hover {
+            color: var(--link-color);
+        }
+
+        /* Main Content & Sidebar */
+        .main-content {
+            flex: 3;
+            min-width: 60%;
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            align-self: flex-start;
+        }
+
+        /* Blog Post */
+        .blog-post {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .blog-post h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #888888;
+            margin-bottom: 15px;
+        }
+
+        .post-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Sidebar content */
+        .sidebar h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .sidebar img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .sidebar p {
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .main-content, .sidebar {
+                flex: none;
+                width: 100%;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>My Digital Thoughts</h1>
+        <p>A place where I share my journey in tech and design.</p>
+    </header>
+
+    <nav class="main-nav">
+        <ul>
+             <a href="the image tailor.html">Home</a>
+            <a href="theimagetailor.html">Work in Action</a>
+            <a href="theimagetailor2.html">Pricing Menu</a>
+            <a href="theimagetailor3.html">Premium</a>
+
+        </ul>
+    </nav>
+
+    <div class="container">
+        <main class="main-content">
+            <article class="blog-post">
+                <h2>The Rise of The Image Tailor</h2>
+                <p class="post-meta"></p>
+                <div class="post-content">
+                    <p>The Image Tailor rose from a simple passion for editing pictures into a brand built with creativity and vision. It began when two students, Faraz and Yuvraj, started experimenting with photo edits for friends and realized how much difference their touch could make. Word spread, and what started as a hobby quickly turned into a service where people trusted them to refine and enhance their photos. With dedication, precision, and the idea of tailoring every image to perfection, The Image Tailor grew into a name that represents creativity, personalization, and professional editing.</p>
+                </div>
+            </article>
+
+            <article class="blog-post">
+                <h2>A Deep Dive into The Image Tailor</h2>
+                <p class="post-meta">© 2025 The Image Tailor. All rights reserved.</p>
+                <div class="post-content">
+                    <p>The Image Tailor is a creative photo editing brand that focuses on transforming ordinary pictures into polished, professional, and visually striking images. Just like a tailor customizes clothing to fit perfectly, The Image Tailor refines and enhances every detail of a photo to match the client’s unique vision. With precision, creativity, and attention to detail, it provides personalized edits that bring out the best in each image, making them more expressive, vibrant, and memorable.</p>
+                </div>
+            </article>
+        </main>
+
+        <aside class="sidebar">
+            <h3>About the Author</h3>
+           
+            <p>Hi, The Image Tailor was founded by Sayyed Mohammed Faraz and designed by Yuvraj Gautam, with a focus on delivering professional and creative photo and reel editing services with an enhanced user interface. Our mission is to transform your visual content into stunning masterpieces that tell your unique story.
+
+We are a dedicated team of passionate editors, committed to providing reliable, fast, and affordable services. We believe in building a seamless creative partnership with our clients, ensuring your vision is brought to life perfectly.</p>
+        </aside>
+    </div>
+
+    <footer class="site-footer">
+        <p>&copy; © 2025 The Image Tailor. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
