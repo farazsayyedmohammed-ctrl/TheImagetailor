@@ -878,13 +878,13 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
             <div class="faq-item">
                 <h3>What is your turnaround time?</h3>
                 <div class="faq-answer">
-                    <p>Our standard turnaround time for most photo edits is **24-48 hours**. For more complex projects like posters or videos, it may take a bit longer. We will provide an estimated delivery time after reviewing your request.</p>
+                    <p>Our standard turnaround time for most photo edits is <b>24-48 hours</b>. For more complex projects like posters or videos, it may take a bit longer. We will provide an estimated delivery time after reviewing your request.</p>
                 </div>
             </div>
             <div class="faq-item">
                 <h3>How do I send you my images or videos?</h3>
                 <div class="faq-answer">
-                    <p>You can upload your files directly using the **Quick Booking** form on our homepage. If the files are too large, you can share them via a cloud service like Google Drive or Dropbox in the notes section.</p>
+                    <p>You can upload your files directly using the <b>Quick Booking</b> form on our homepage. If the files are too large, you can share them via a cloud service like Google Drive or Dropbox in the notes section.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -896,23 +896,23 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
             <div class="faq-item">
                 <h3>What types of services do you offer?</h3>
                 <div class="faq-answer">
-                    <p>We provide a wide range of services including photo retouching, background removal, custom designs for posters and social media posts, and professional reel & video editing. You can view a detailed list on our **Pricing Menu** page.</p>
+                    <p>We provide a wide range of services including photo retouching, background removal, custom designs for posters and social media posts, and professional reel & video editing. You can view a detailed list on our <b>Pricing Menu</b> page.</p>
                 </div>
             </div>
         </section>
     </main>
     <div id="aiChatWidget">
-        <button id="aiChatButton" title="Chat with ImageTailorAI">
+        <button id="aiChatButton" title="Chat with LUMINA AI">
             <i class="fas fa-robot"></i>
         </button>
         <div id="aiChatContainer">
             <div id="chatHeader">
-                ImageTailorAI
+               LUMINA AI
                 <button id="closeChat">&times;</button>
             </div>
             <div id="chatBody">
-                <div class="message ai-message">Hi there! I'm ImageTailorAI. How can I help you today?</div>
-                <div class="message ai-message">You can ask about our **services**, **pricing**, or **contact** details.</div>
+                <div class="message ai-message">Hi there! I'm LUMINA AI. How can I help you today?</div>
+                <div class="message ai-message">You can ask about our <b>services</b>, <b>pricing</b>, or <b>contact</b> details.</div>
             </div>
             <div id="chatInputContainer">
                 <input type="text" id="chatInput" placeholder="Type a message..." />
@@ -1119,21 +1119,21 @@ orderButton.addEventListener('click', async (e) => {
             function generateAiResponse(message) {
                 const lowerCaseMessage = message.toLowerCase();
                 if (lowerCaseMessage.includes('services')) {
-                    return `We offer a wide range of services including **Basic Editing** (retouching, filters), **Background Services** (removal, addition), **Posters & Designs** (for birthdays, social media), and **Reel & Video Editing**.`;
+                    return `We offer a wide range of services including<b>Basic Editing</b> (retouching, filters),<b>Background Services</b> (removal, addition), <b>Posters & Designs</b> (for birthdays, social media), and <b>Reel & Video Editing</b>.`;
                 }
                 if (lowerCaseMessage.includes('pricing') || lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost')) {
-                    return `Our pricing is listed on the **Pricing Menu** page. We have transparent rates starting from ₹20 for basic edits. Check out our **Premium** page for discounted bundles!`;
+                    return `Our pricing is listed on the <b>Pricing Menu</b> page. We have transparent rates starting from ₹20 for basic edits. Check out our <b>Premium</b page for discounted bundles!`;
                 }
                 if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('email') || lowerCaseMessage.includes('phone')) {
-                    return `You can contact us via email at **farazsayyedmohammed@gmail.com** or on WhatsApp at **+91 7985409760**.`;
+                    return `You can contact us via email at <b>farazsayyedmohammed@gmail.com</b> or on WhatsApp at <b>+91 7985409760</b>.`;
                 }
                 if (lowerCaseMessage.includes('turnaround')) {
-                    return `Our standard turnaround time for basic photo edits is **24-48 hours**. For more complex projects like posters or videos, it may take a bit longer.`;
+                    return `Our standard turnaround time for basic photo edits is <b>24-48 hours</b>. For more complex projects like posters or videos, it may take a bit longer.`;
                 }
                 if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
                     return `Hello! How can I assist you with your image and reel editing needs today?`;
                 }
-                return `I'm sorry, I didn't quite understand that. I can answer questions about our **services**, **pricing**, or **contact** details.`;
+                return `I'm sorry, I didn't quite understand that. I can answer questions about our <b>services</b>, <b>pricing</b>, or <b>contact</b> details.`;
             }
         });
     </script>
