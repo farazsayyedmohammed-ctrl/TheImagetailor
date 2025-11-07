@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -197,9 +198,9 @@
         }
 
         .experience-badge {
-            position: absolute;
-            bottom: 20px; /* Distance from the bottom */
-            right: 20px; /* Distance from the right */
+            position: fixed;
+            bottom: -1530px; /* Distance from the bottom */
+            right: 200px; /* Distance from the right */
             background-color: rgba(255, 204, 0, 0.9); /* Yellow with some transparency */
             color: #000;
             padding: 8px 15px;
@@ -753,7 +754,7 @@
     <div id="splash-screen">
         <h1>The Image Tailor<span class="registered">®</span></h1>
         <p>Professional image & reel editing — fast, affordable, reliable</p>
-    </div>
+    </div> 
     <header>
         <div class="header-brand">
             <img src="logo.jpg" alt="The Image Tailor" />
@@ -800,7 +801,7 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
         <section id="booking-section" class="hidden">
             <h2>Quick Booking</h2>
             <p style="text-align: center; color: #ccc; margin-bottom: 20px;">Fill out the form below to place your order. You can attach your image and specify your needs.</p>
-            <form id="booking-form" 
+            <form id="booking-form" >
     <div class="form-group">
         <label for="name">Your Name</label>
         <input type="text" id="name" name="name" placeholder="John Doe" required>
@@ -864,6 +865,7 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
         <a href="mailto:farazsayyedmohammed@gmail.com" id="email-issue-button">Call To Action </a>
     </div>
 </form>
+<div class="experience-badge">5+ Years Experience</div>
         </section>
         <section class="about-us hidden">
             <h2>Meet Faraz</h2>
@@ -872,7 +874,7 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
         </section>
 <section class="image-experience-section hidden">
             <img src="https://i.pinimg.com/1200x/94/2b/8e/942b8e13eaaca477ce7854c5393e47aa.jpg" alt="Faraz's creative work with 5+ years experience">
-            <div class="experience-badge">5+ Years Experience</div>
+            
         <section id="faqs-section" class="hidden">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
@@ -989,70 +991,72 @@ Professional photo editing services specializing in aesthetic, cenematic, and re
                 });
             });
 
-            // Form Submission (Simulated) & Truck Animation
-            // const orderButton = document.querySelector('.order-button');
-            // const bookingForm = document.getElementById('booking-form');
-            // const emailIssueButton = document.getElementById('email-issue-button');
-
-            // orderButton.addEventListener('click', (e) => {
-            //     if (bookingForm.checkValidity()) {
-            //         e.preventDefault();
-            //         orderButton.classList.add('sent');
-            //         setTimeout(() => {
-            //             alert('Booking request submitted!');
-            //             orderButton.classList.remove('sent');
-            //         }, 2500);
-            //     } else {
-            //         bookingForm.reportValidity();
-            //     }
-            // });
-
-
-         // Form Submission (Using AJAX to keep animation and send file)
+     // Form Submission (Using AJAX to keep animation and send file)
 const orderButton = document.querySelector('.order-button');
 const bookingForm = document.getElementById('booking-form');
 
-orderButton.addEventListener('click', async (e) => {
-    // Form validation check
-    if (bookingForm.checkValidity()) {
-        e.preventDefault(); // Default form submission ko rokta hai
-        
-        // Animation start karein
-        orderButton.classList.add('sent');
+// === WhatsApp submission ===
+// Set your business WhatsApp number in international format (no + or spaces)
+const BUSINESS_WHATSAPP = '917985409760'; // <- change if needed
 
-        
-        // Form ka data aur file ko ek saath collect karein
-        const formData = new FormData(bookingForm);
+function buildWhatsappText() {
+  const name   = document.getElementById('name')?.value?.trim() || '';
+  const phone  = document.getElementById('phone')?.value?.trim() || '';
+  const email  = document.getElementById('email_booking')?.value?.trim() || '';
+  const service= document.getElementById('service')?.value || '';
+  const note   = document.getElementById('note')?.value?.trim() || '';
+  const files  = document.getElementById('file-upload')?.files || [];
 
-        // Formspree ko data bhejein
-        try {
-            const response = await fetch(bookingForm.action, {
-                method: bookingForm.method,
-                body: formData
-            });
+  // You cannot auto-attach local files to WhatsApp via URL.
+  // We'll include a line telling how many files were selected.
+  const fileInfo = files.length ? `${files.length} file(s) selected (attach in chat)` : 'No files selected';
 
-            if (response.ok) {
-                // Wait for the animation to finish before showing the alert
-                setTimeout(() => {
-                    alert('Booking submitted successfully!');
-                    orderButton.classList.remove('sent');
-                    bookingForm.reset(); // Saare form fields ko saaf kar dega
-                }, 3000); // 3-second delay
-            } else {
-                alert('There was an issue with your submission.');
-                orderButton.classList.remove('sent');
-            }
+  const lines = [
+    'New booking enquiry:',
+    `• Name: ${name}`,
+    `• Phone: ${phone}`,
+    `• Email: ${email}`,
+    `• Service: ${service}`,
+    `• Notes: ${note || '—'}`,
+    `• Files: ${fileInfo}`,
+    '',
+    'Please confirm the price & turnaround.'
+  ];
 
-        } catch (error) {
-            alert('A network error occurred. Please try again.');
-            orderButton.classList.remove('sent');
-        }
-        
-    } else {
-        // Agar form valid nahi hai, toh browser validation messages dikhayega
-        bookingForm.reportValidity();
-    }
+  return lines.join('\n');
+}
+
+function openWhatsappWith(text) {
+  const encoded = encodeURIComponent(text);
+
+  // Works on both mobile (opens app) and desktop (opens WhatsApp Web)
+  const waUrl = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encoded}`;
+
+  // Try opening in a new tab/window
+  window.open(waUrl, '_blank', 'noopener');
+}
+
+orderButton.addEventListener('click', (e) => {
+  // Use the form's native validation first
+  if (!bookingForm.checkValidity()) {
+    bookingForm.reportValidity();
+    return;
+  }
+
+  // Optional: play your existing "truck" animation feedback
+  orderButton.classList.add('sent');
+
+  // Build message and open WhatsApp
+  const text = buildWhatsappText();
+  openWhatsappWith(text);
+
+  // Optional: reset the visual state after a moment
+  setTimeout(() => {
+    orderButton.classList.remove('sent');
+  }, 2500);
 });
+
+
 
             // Intersection Observer for scroll animations
             const observer = new IntersectionObserver((entries) => {
